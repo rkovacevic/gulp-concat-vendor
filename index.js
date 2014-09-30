@@ -40,14 +40,11 @@ module.exports = function(filename, sources) {
 					var myData = JSON.parse(data);
 
 					if(!!myData.main) {
-						if ( typeof myData.main != 'string' ) {
-							myData.main = myData.main.filter(function (filePath) {
-								var suffix = '.js';
-								return filePath.indexOf(suffix, filePath.length - suffix.length) !== -1;
-							});
-						}
-						var myMain = [].concat(myData.main),
-							mySourcePath = util.format("%s/%s", file.path, myMain[0]);
+						var myMain = [].concat(myData.main).filter(function (filePath) {
+							var suffix = '.js';
+							return filePath.indexOf(suffix, filePath.length - suffix.length) !== -1;
+						});
+						var mySourcePath = util.format("%s/%s", file.path, myMain[0]);
 
 						myInfo.push(myData);
 						mySources[myData.name] = mySourcePath;
